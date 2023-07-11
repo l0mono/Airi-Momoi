@@ -24,4 +24,4 @@ async def on_message(message):
         await message.channel.send('Hello!')
 
 # クライアントの実行
-client.run('MTEyODIwNTcwMjY5NjAyNjEzMw.GtXAHm.rUDTLSNGMTW4NGQRJ6lVooZmm057BisJKgy6l0')
+client.run('')
