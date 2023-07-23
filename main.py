@@ -1,27 +1,37 @@
+from discord.ext import commands
 import discord
+from config import TOKEN
 
-# インテントの生成
 intents = discord.Intents.default()
+intents.members = True
 intents.message_content = True
 
-# クライアントの生成
-client = discord.Client(intents=intents)
+bot = commands.Bot(
+    command_prefix="/",
+    case_insensitive=True,
+    intents=intents
+)
 
-# discordと接続した時に呼ばれる
-@client.event
+@bot.event
 async def on_ready():
-    print(f'We have logged in as {client.user}')
+    print("Bot is ready!")
 
-# メッセージを受信した時に呼ばれる
-@client.event
-async def on_message(message):
-    # 自分のメッセージを無効
-    if message.author == client.user:
-        return
+def calculate_duration(year):
+    # 高校卒業から大学卒業までの期間を計算する関数
+    high_school_graduation = year + 3
+    university_graduation = year + 7
+    return high_school_graduation, university_graduation
 
-    # メッセージが"$hello"で始まっていたら"Hello!"と応答
-    if message.content.startswith('$hello'):
-        await message.channel.send('Hello!')
+@bot.command()
+async def hello(ctx: commands.Context) -> None:
+    """helloと返すコマンド"""
+    await ctx.send(f"Hello {ctx.author.name}")
 
-# クライアントの実行
-client.run('')
+@bot.command()
+async def calc_duration(ctx: commands.Context, year: int) -> None:
+    """入学年度から高校卒業から大学卒業までの期間を計算するコマンド"""
+    high_school_graduation, university_graduation = calculate_duration(year)
+    response = f"{year}年に入学した場合、高校卒業は{high_school_graduation}年、大学卒業は{university_graduation}年です。"
+    await ctx.send(response)
+
+bot.run(TOKEN)
