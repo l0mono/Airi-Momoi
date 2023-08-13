@@ -18,8 +18,8 @@ async def on_ready():
 
 def calculate_duration(year):
     # 高校卒業から大学卒業までの期間を計算する関数
-    high_school_graduation = year + 3
-    university_graduation = year + 7
+    high_school_graduation = year + 18
+    university_graduation = year + 22
     return high_school_graduation, university_graduation
 
 @bot.command()
